@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="lang-ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pdf All In One-LegalDan — A pocket folio for documents. أرشيف جيبي للوثائق.">
+    <meta name="author" content="LegalDan">
+    <title>Pdf All In One-LegalDan — المحفظة · The Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #f4eee3;
+            --cream-2: #ece5d6;
+            --ink: #0b0b0b;
+            --ink-2: #1a1816;
+            --gold: #c9a961;
+            --gold-dim: #8c7641;
+            --soft: #6b6358;
+            --line: #d9d1bf;
+            --rust: #a04d2b;
+        }
+        html.lang-ar {
+            --serif: "Amiri", "Times New Roman", serif;
+            --sans: "Cairo", -apple-system, BlinkMacSystemFont, sans-serif;
+            --line-h: 1.65;
+            --display-line: 1.18;
+        }
+        html.lang-en {
+            --serif: "Cormorant Garamond", "Times New Roman", serif;
+            --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+            --line-h: 1.55;
+            --display-line: 0.95;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--sans);
+            background: var(--cream);
+            color: var(--ink);
+            line-height: var(--line-h);
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        ::selection { background: var(--gold); color: var(--ink); }
+        img { display: block; max-width: 100%; }
+
+        /* Language visibility */
+        html.lang-ar .en { display: none !important; }
+        html.lang-en .ar { display: none !important; }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(244,238,227,0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(217,209,191,0.6);
+        }
+        .nav-in {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 18px 40px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 24px;
+        }
+        .nav-left {
+            font-family: var(--serif);
+            font-size: 0.84rem;
+            color: var(--soft);
+            font-weight: 400;
+        }
+        html.lang-en .nav-left { letter-spacing: 4px; text-transform: uppercase; font-size: 0.78rem; font-weight: 500; }
+        .nav-mark {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            color: var(--ink);
+            text-align: center;
+            direction: ltr;
+        }
+        html.lang-en .nav-mark { font-weight: 600; letter-spacing: 1px; font-size: 1.25rem; }
+        .nav-mark i { font-style: italic; color: var(--gold-dim); margin: 0 2px; }
+        .nav-right {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 22px;
+        }
+        .nav-link {
+            font-size: 0.82rem;
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 2px;
+            transition: border-color 0.2s;
+        }
+        html.lang-en .nav-link { letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.74rem; font-weight: 500; }
+        .nav-link:hover { border-bottom-color: var(--gold); }
+        .nav-cta {
+            background: var(--ink);
+            color: var(--cream);
+            padding: 11px 22px;
+            font-size: 0.82rem;
+            text-decoration: none;
+            font-weight: 700;
+            transition: background 0.2s;
+        }
+        html.lang-en .nav-cta { letter-spacing: 2px; text-transform: uppercase; font-size: 0.74rem; font-weight: 600; }
+        .nav-cta:hover { background: var(--gold-dim); }
+
+        /* Language switcher */
+        .lang {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: "Inter", sans-serif;
+            font-size: 0.74rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            direction: ltr;
+        }
+        .lang a {
+            text-decoration: none;
+            padding: 3px 4px;
+            transition: color 0.2s;
+            color: var(--soft);
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font: inherit;
+            letter-spacing: inherit;
+        }
+        .lang a:hover { color: var(--ink); }
+        html.lang-ar .lang [data-lang="ar"],
+        html.lang-en .lang [data-lang="en"] {
+            color: var(--gold-dim);
+            border-bottom: 1.5px solid var(--gold-dim);
+            cursor: default;
+        }
+        .lang .sep { color: var(--line); margin: 0 2px; }
+
+        /* ── STRIP ── */
+        .strip {
+            padding: 100px 40px 14px;
+            max-width: 1480px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            color: var(--soft);
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 14px;
+            font-family: var(--serif);
+        }
+        html.lang-en .strip { font-size: 0.74rem; letter-spacing: 3px; text-transform: uppercase; font-family: var(--sans); }
+        .strip span:last-child { color: var(--gold-dim); font-weight: 700; }
+
+        /* ── HERO ── */
+        .hero {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 60px 40px 100px;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 60px;
+            align-items: end;
+            min-height: 86vh;
+        }
+        .hero-text { padding-bottom: 40px; }
+        .hero-eyebrow {
+            font-family: var(--serif);
+            font-style: italic;
+            color: var(--gold-dim);
+            font-size: 1.12rem;
+            margin-bottom: 26px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        html.lang-en .hero-eyebrow { font-size: 1.05rem; }
+        .hero-eyebrow::before {
+            content: '';
+            width: 60px;
+            height: 1px;
+            background: var(--gold-dim);
+        }
+        .hero h1 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(3.2rem, 7vw, 7rem);
+            line-height: var(--display-line);
+            margin-bottom: 36px;
+            color: var(--ink);
+        }
+        html.lang-en .hero h1 { letter-spacing: -2.5px; }
+        .hero h1 .it { color: var(--gold-dim); font-style: italic; font-weight: 400; }
+        html.lang-en .hero h1 .it { font-weight: 300; }
+        .hero h1 .line { display: block; }
+        .hero-deck {
+            font-family: var(--serif);
+            font-size: 1.35rem;
+            line-height: 1.7;
+            color: var(--ink-2);
+            font-weight: 400;
+            max-width: 500px;
+            margin-bottom: 44px;
+            font-style: italic;
+        }
+        html.lang-en .hero-deck { font-size: 1.25rem; line-height: 1.5; max-width: 460px; }
+        .hero-cta-row {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: var(--ink);
+            color: var(--cream);
+            padding: 18px 38px;
+            text-decoration: none;
+            font-family: var(--sans);
+            font-weight: 700;
+            font-size: 0.95rem;
+            position: relative;
+            transition: all 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+        }
+        html.lang-en .btn-primary { letter-spacing: 2.5px; text-transform: uppercase; font-size: 0.84rem; font-weight: 600; }
+        .btn-primary::after {
+            content: '→';
+            font-size: 1.1rem;
+            transition: transform 0.25s;
+            display: inline-block;
+        }
+        html[dir="rtl"] .btn-primary::after { content: '←'; }
+        .btn-primary:hover { background: var(--gold-dim); }
+        .btn-primary:hover::after { transform: translateX(4px); }
+        html[dir="rtl"] .btn-primary:hover::after { transform: translateX(-4px); }
+        .hero-micro {
+            font-family: var(--serif);
+            font-style: italic;
+            color: var(--soft);
+            font-size: 1rem;
+        }
+        html.lang-en .hero-micro { font-size: 0.95rem; }
+        .hero-portrait {
+            position: relative;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            background: var(--ink);
+        }
+        .hero-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 22%;
+            filter: contrast(1.02) saturate(0.92);
+        }
+        .hero-portrait .corner-tag {
+            position: absolute;
+            top: 22px;
+            inset-inline-start: 22px;
+            background: var(--cream);
+            color: var(--ink);
+            padding: 9px 14px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            font-family: var(--serif);
+        }
+        html.lang-en .hero-portrait .corner-tag { letter-spacing: 2.5px; text-transform: uppercase; font-size: 0.7rem; font-weight: 600; }
+        .hero-portrait .credit {
+            position: absolute;
+            bottom: 18px;
+            inset-inline-end: 22px;
+            color: rgba(244,238,227,0.78);
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 0.9rem;
+            text-align: end;
+        }
+        html.lang-en .hero-portrait .credit { font-size: 0.85rem; letter-spacing: 1px; }
+
+        /* ── MARQUEE ── */
+        .marquee {
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            padding: 30px 0;
+            overflow: hidden;
+            background: var(--cream-2);
+        }
+        .marquee-track {
+            display: flex;
+            gap: 60px;
+            animation: scroll 38s linear infinite;
+            white-space: nowrap;
+            font-family: var(--serif);
+            font-size: 2.3rem;
+            color: var(--ink);
+            font-weight: 400;
+        }
+        html.lang-en .marquee-track { font-size: 2.2rem; font-style: italic; }
+        .marquee-track span { display: inline-flex; align-items: center; gap: 60px; }
+        .marquee-track span::after {
+            content: '✦';
+            color: var(--gold);
+            font-size: 1.4rem;
+            font-style: normal;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ── FOLIO ── */
+        .folio {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 140px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .folio.reverse > .folio-copy { order: -1; }
+        .folio-media { position: relative; }
+        .folio-media img {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            filter: contrast(1.02) saturate(0.94);
+        }
+        .folio-media .folio-tag {
+            position: absolute;
+            top: 18px;
+            inset-inline-start: 18px;
+            background: var(--ink);
+            color: var(--cream);
+            padding: 9px 16px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            font-family: var(--serif);
+        }
+        html.lang-en .folio-media .folio-tag { letter-spacing: 2px; text-transform: uppercase; font-size: 0.7rem; font-weight: 600; }
+        .folio-media .timestamp {
+            position: absolute;
+            bottom: 18px;
+            inset-inline-end: 22px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.2rem;
+            color: rgba(244,238,227,0.94);
+            letter-spacing: 1.5px;
+            text-shadow: 0 1px 12px rgba(0,0,0,0.4);
+            direction: ltr;
+        }
+        .folio-copy { padding: 20px 0; }
+        .folio-num {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--gold-dim);
+            margin-bottom: 22px;
+            font-weight: 700;
+        }
+        html.lang-en .folio-num { letter-spacing: 3px; text-transform: uppercase; font-size: 0.95rem; font-weight: 500; }
+        .folio h2 {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: clamp(2.4rem, 4.2vw, 4rem);
+            line-height: 1.2;
+            margin-bottom: 28px;
+        }
+        html.lang-en .folio h2 { font-weight: 400; letter-spacing: -1.5px; line-height: 1.04; }
+        .folio h2 em { font-style: italic; color: var(--gold-dim); font-weight: 400; }
+        .folio-body {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--ink-2);
+            margin-bottom: 28px;
+            max-width: 520px;
+        }
+        html.lang-en .folio-body { font-size: 1.18rem; line-height: 1.65; max-width: 480px; }
+        .folio-pull {
+            border-inline-start: 2px solid var(--gold);
+            padding-block: 8px;
+            padding-inline-start: 22px;
+            padding-inline-end: 0;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.18rem;
+            color: var(--soft);
+            margin: 28px 0;
+            max-width: 480px;
+            line-height: 1.7;
+        }
+        html.lang-en .folio-pull { font-size: 1.1rem; }
+        .folio-act {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.88rem;
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 700;
+            padding-bottom: 6px;
+            border-bottom: 1.5px solid var(--ink);
+            transition: gap 0.25s, color 0.2s;
+        }
+        html.lang-en .folio-act { letter-spacing: 2px; text-transform: uppercase; font-size: 0.78rem; font-weight: 600; }
+        .folio-act:hover { color: var(--gold-dim); border-color: var(--gold-dim); gap: 18px; }
+        .folio-act::after { content: '→'; font-size: 1rem; }
+        html[dir="rtl"] .folio-act::after { content: '←'; }
+
+        /* ── PRODUCT ── */
+        .product {
+            background: var(--ink);
+            color: var(--cream);
+            padding: 140px 0;
+        }
+        .product-in { max-width: 1480px; margin: 0 auto; padding: 0 40px; }
+        .product-head {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: end;
+            margin-bottom: 90px;
+        }
+        .product-head .label {
+            font-family: var(--serif);
+            font-style: italic;
+            color: var(--gold);
+            font-size: 1.1rem;
+            margin-bottom: 22px;
+        }
+        html.lang-en .product-head .label { font-size: 1.05rem; }
+        .product-head h2 {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: clamp(3rem, 6vw, 6rem);
+            line-height: 1.1;
+        }
+        html.lang-en .product-head h2 { font-weight: 300; letter-spacing: -2px; line-height: 0.95; }
+        .product-head h2 em { font-style: italic; font-weight: 400; color: var(--gold); }
+        .product-head .deck {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            color: rgba(244,238,227,0.75);
+            line-height: 1.7;
+            font-style: italic;
+            max-width: 480px;
+            padding-bottom: 14px;
+        }
+        html.lang-en .product-head .deck { font-size: 1.2rem; line-height: 1.6; max-width: 460px; }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 70px 50px;
+        }
+        .tool {
+            position: relative;
+            padding-top: 28px;
+            border-top: 1px solid rgba(244,238,227,0.18);
+        }
+        .tool .num {
+            position: absolute;
+            top: 18px;
+            inset-inline-end: 0;
+            font-family: var(--serif);
+            font-style: italic;
+            color: var(--gold);
+            font-size: 1.4rem;
+            direction: ltr;
+        }
+        .tool h3 {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: 1.9rem;
+            line-height: 1.25;
+            margin-bottom: 14px;
+            color: var(--cream);
+        }
+        html.lang-en .tool h3 { font-weight: 400; font-size: 1.8rem; line-height: 1.1; }
+        .tool h3 em { font-style: italic; color: var(--gold); font-weight: 400; }
+        .tool p {
+            font-size: 0.98rem;
+            color: rgba(244,238,227,0.65);
+            line-height: 1.7;
+        }
+        html.lang-en .tool p { font-size: 0.95rem; line-height: 1.65; }
+
+        /* ── PRICING ── */
+        .price-section { background: var(--cream); padding: 160px 40px; }
+        .price-in { max-width: 1100px; margin: 0 auto; text-align: center; }
+        .price-section .label {
+            font-family: var(--serif);
+            font-style: italic;
+            color: var(--gold-dim);
+            font-size: 1.05rem;
+            margin-bottom: 22px;
+        }
+        html.lang-en .price-section .label { font-size: 1rem; letter-spacing: 1px; }
+        .price-section h2 {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: clamp(2.6rem, 5.4vw, 5.4rem);
+            line-height: 1.15;
+            margin-bottom: 50px;
+        }
+        html.lang-en .price-section h2 { font-weight: 300; letter-spacing: -2px; line-height: 1; }
+        .price-section h2 em { font-style: italic; color: var(--gold-dim); font-weight: 400; }
+        .anchor-row {
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            gap: 60px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        .anchor { text-align: center; position: relative; }
+        .anchor .a-label {
+            font-size: 0.78rem;
+            color: var(--soft);
+            margin-bottom: 14px;
+            font-weight: 700;
+        }
+        html.lang-en .anchor .a-label { letter-spacing: 2.5px; text-transform: uppercase; font-size: 0.74rem; font-weight: 600; }
+        .anchor .a-val {
+            font-family: var(--serif);
+            font-size: 2.8rem;
+            font-weight: 400;
+            line-height: 1;
+            color: var(--soft);
+            text-decoration: line-through;
+            text-decoration-thickness: 2px;
+            text-decoration-color: var(--rust);
+            direction: ltr;
+        }
+        .anchor.featured .a-val {
+            font-size: 5.4rem;
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        html.lang-en .anchor.featured .a-val { font-weight: 500; }
+        .anchor.featured .a-label { color: var(--gold-dim); }
+        .anchor .a-sub {
+            font-family: var(--serif);
+            font-style: italic;
+            color: var(--soft);
+            font-size: 1rem;
+            margin-top: 8px;
+        }
+        .price-cta { margin-top: 30px; }
+        .price-pillars {
+            margin-top: 70px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            padding-top: 60px;
+            border-top: 1px solid var(--line);
+            text-align: start;
+        }
+        .pillar { display: flex; flex-direction: column; gap: 12px; }
+        .pillar .pn {
+            font-family: var(--serif);
+            font-style: italic;
+            color: var(--gold-dim);
+            font-size: 0.95rem;
+            direction: ltr;
+            text-align: start;
+        }
+        html.lang-en .pillar .pn { letter-spacing: 1px; font-size: 0.9rem; }
+        .pillar .pt {
+            font-family: var(--serif);
+            font-size: 1.4rem;
+            line-height: 1.4;
+            font-weight: 700;
+            color: var(--ink);
+        }
+        html.lang-en .pillar .pt { font-weight: 500; font-size: 1.35rem; line-height: 1.3; }
+        .pillar .pd { font-size: 0.94rem; color: var(--soft); line-height: 1.65; }
+        html.lang-en .pillar .pd { font-size: 0.92rem; line-height: 1.55; }
+
+        /* ── FINALE ── */
+        .finale {
+            background: var(--ink);
+            color: var(--cream);
+            padding: 180px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .finale::before {
+            content: '✦';
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-size: 2rem;
+        }
+        .finale .label {
+            font-family: var(--serif);
+            font-style: italic;
+            color: var(--gold);
+            font-size: 1.1rem;
+            margin-bottom: 36px;
+        }
+        html.lang-en .finale .label { font-size: 1.05rem; letter-spacing: 1px; }
+        .finale h2 {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: clamp(2.8rem, 6.8vw, 6.8rem);
+            line-height: 1.15;
+            margin-bottom: 28px;
+            max-width: 1100px;
+            margin-inline: auto;
+        }
+        html.lang-en .finale h2 { font-weight: 300; letter-spacing: -2.5px; line-height: 0.95; }
+        .finale h2 em { font-style: italic; color: var(--gold); font-weight: 400; }
+        .finale p {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.35rem;
+            color: rgba(244,238,227,0.72);
+            max-width: 580px;
+            margin: 0 auto 50px;
+            line-height: 1.55;
+        }
+        html.lang-en .finale p { font-size: 1.3rem; line-height: 1.5; max-width: 540px; }
+        .finale .btn-primary {
+            background: var(--gold);
+            color: var(--ink);
+            padding: 22px 50px;
+            font-size: 0.95rem;
+        }
+        html.lang-en .finale .btn-primary { font-size: 0.9rem; }
+        .finale .btn-primary:hover { background: var(--cream); }
+        .finale .below {
+            margin-top: 28px;
+            font-size: 0.82rem;
+            color: rgba(244,238,227,0.5);
+            font-family: var(--serif);
+            font-style: italic;
+        }
+        html.lang-en .finale .below { font-family: var(--sans); font-style: normal; letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; color: rgba(244,238,227,0.45); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--ink-2);
+            color: rgba(244,238,227,0.45);
+            padding: 50px 40px;
+            font-size: 0.88rem;
+        }
+        html.lang-en footer { font-size: 0.8rem; }
+        .footer-in {
+            max-width: 1480px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        footer a { color: var(--gold); text-decoration: none; margin: 0 10px; }
+        .colofon {
+            font-family: var(--serif);
+            font-style: italic;
+            color: rgba(244,238,227,0.55);
+        }
+        html.lang-en .colofon { color: rgba(244,238,227,0.5); }
+
+        /* ── REVEALS ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1100px) {
+            .nav-in { padding: 16px 22px; grid-template-columns: auto 1fr auto; }
+            .nav-left { display: none; }
+            .strip { padding: 86px 28px 14px; }
+            .hero { grid-template-columns: 1fr; gap: 44px; padding: 36px 28px 80px; min-height: auto; }
+            .hero-text { order: 2; padding-bottom: 0; }
+            .hero-portrait { order: 1; aspect-ratio: 4 / 5; }
+            .hero-eyebrow { font-size: 1rem; margin-bottom: 22px; }
+            .hero-eyebrow::before { width: 44px; }
+            .hero-deck { font-size: 1.18rem; margin-bottom: 36px; }
+            .folio { grid-template-columns: 1fr; gap: 36px; padding: 80px 28px; }
+            .folio.reverse > .folio-copy { order: 0; }
+            .folio-media img { aspect-ratio: 5 / 6; }
+            .folio-copy { padding: 0; }
+            .folio-body { font-size: 1.15rem; max-width: none; }
+            .folio-pull { max-width: none; }
+            .product { padding: 110px 0; }
+            .product-in { padding: 0 28px; }
+            .product-head { grid-template-columns: 1fr; gap: 26px; margin-bottom: 70px; }
+            .product-head .deck { padding-bottom: 0; }
+            .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 52px 40px; }
+            .price-section { padding: 120px 28px; }
+            .price-pillars { grid-template-columns: 1fr; gap: 30px; padding-top: 50px; margin-top: 50px; }
+            .finale { padding: 140px 28px; }
+            .marquee-track { font-size: 2rem; gap: 50px; }
+            .marquee-track span { gap: 50px; }
+        }
+        @media (max-width: 700px) {
+            nav { background: rgba(244,238,227,0.92); }
+            .nav-in { padding: 14px 18px; gap: 12px; }
+            .nav-mark { font-size: 1.05rem; }
+            .nav-right { gap: 12px; }
+            .nav-link { display: none; }
+            .nav-cta { padding: 9px 16px; font-size: 0.74rem; }
+            html.lang-en .nav-cta { letter-spacing: 1.6px; }
+            .lang { font-size: 0.7rem; letter-spacing: 1.4px; }
+            .strip { padding: 78px 22px 12px; flex-direction: column; gap: 5px; align-items: flex-start; font-size: 0.72rem; }
+            html.lang-en .strip { font-size: 0.66rem; letter-spacing: 2px; }
+            .hero { padding: 26px 22px 60px; gap: 36px; }
+            .hero-eyebrow { font-size: 0.92rem; margin-bottom: 18px; }
+            .hero-eyebrow::before { width: 32px; }
+            .hero h1 { margin-bottom: 26px; }
+            html.lang-en .hero h1 { letter-spacing: -1.4px; }
+            .hero-deck { font-size: 1.08rem; margin-bottom: 30px; max-width: none; }
+            .hero-cta-row { gap: 18px; flex-direction: column; align-items: flex-start; }
+            .hero-portrait .corner-tag { font-size: 0.66rem; padding: 7px 12px; top: 16px; }
+            .hero-portrait .credit { font-size: 0.76rem; bottom: 14px; }
+            .btn-primary { padding: 16px 28px; font-size: 0.86rem; }
+            html.lang-en .btn-primary { font-size: 0.78rem; letter-spacing: 2px; }
+            .marquee { padding: 22px 0; }
+            .marquee-track { font-size: 1.6rem; gap: 38px; }
+            .marquee-track span { gap: 38px; }
+            .folio { padding: 60px 22px; gap: 28px; }
+            .folio-media .folio-tag { font-size: 0.66rem; padding: 7px 12px; top: 14px; }
+            .folio-media .timestamp { font-size: 1rem; bottom: 14px; }
+            .folio h2 { margin-bottom: 18px; }
+            html.lang-en .folio h2 { letter-spacing: -1px; }
+            .folio-body { font-size: 1.05rem; line-height: 1.7; margin-bottom: 20px; }
+            html.lang-en .folio-body { font-size: 1.02rem; line-height: 1.6; }
+            .folio-pull { padding-inline-start: 16px; font-size: 1rem; margin: 20px 0; }
+            html.lang-en .folio-pull { font-size: 0.98rem; }
+            .folio-act { font-size: 0.78rem; }
+            html.lang-en .folio-act { letter-spacing: 1.6px; font-size: 0.72rem; }
+            .product { padding: 84px 0; }
+            .product-in { padding: 0 22px; }
+            .product-head { gap: 18px; margin-bottom: 54px; }
+            .product-head .label { font-size: 1rem; margin-bottom: 16px; }
+            .product-head .deck { font-size: 1.06rem; }
+            .tools-grid { grid-template-columns: 1fr; gap: 38px; }
+            .tool { padding-top: 22px; }
+            .tool .num { font-size: 1.2rem; top: 14px; }
+            .tool h3 { font-size: 1.55rem; margin-bottom: 10px; }
+            .tool p { font-size: 0.92rem; }
+            .price-section { padding: 90px 22px; }
+            .price-section .label { font-size: 0.95rem; margin-bottom: 18px; }
+            .price-section h2 { margin-bottom: 40px; }
+            html.lang-en .price-section h2 { letter-spacing: -1.4px; }
+            .anchor-row { flex-direction: column; gap: 0; margin-bottom: 44px; align-items: stretch; }
+            .anchor { padding: 22px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; text-align: start; }
+            .anchor:last-child { border-bottom: 1px solid var(--line); }
+            .anchor .a-label { margin-bottom: 0; font-size: 0.74rem; }
+            html.lang-en .anchor .a-label { letter-spacing: 2px; }
+            .anchor .a-val { font-size: 1.85rem; }
+            .anchor .a-sub { display: none; }
+            .anchor.featured { padding: 36px 0; }
+            .anchor.featured .a-val { font-size: 3.1rem; }
+            .anchor.featured .a-sub { display: block; font-size: 0.9rem; margin-top: 4px; text-align: end; }
+            .pillar .pt { font-size: 1.25rem; }
+            html.lang-en .pillar .pt { font-size: 1.2rem; }
+            .pillar .pd { font-size: 0.9rem; }
+            html.lang-en .pillar .pd { font-size: 0.88rem; }
+            .finale { padding: 110px 22px; }
+            .finale::before { top: 36px; font-size: 1.6rem; }
+            .finale .label { font-size: 1rem; margin-bottom: 26px; }
+            .finale h2 { line-height: 1.15; margin-bottom: 22px; }
+            html.lang-en .finale h2 { letter-spacing: -1.6px; line-height: 0.95; }
+            .finale p { font-size: 1.15rem; margin-bottom: 38px; }
+            html.lang-en .finale p { font-size: 1.1rem; }
+            .finale .btn-primary { padding: 18px 36px; font-size: 0.88rem; }
+            html.lang-en .finale .btn-primary { font-size: 0.82rem; }
+            .finale .below { font-size: 0.78rem; margin-top: 24px; }
+            html.lang-en .finale .below { font-size: 0.66rem; letter-spacing: 1.8px; }
+            footer { padding: 40px 22px; }
+            .footer-in { flex-direction: column; gap: 14px; text-align: center; }
+            .colofon { font-size: 0.82rem; }
+        }
+        @media (max-width: 400px) {
+            .hero { padding: 22px 18px 50px; }
+            .hero-deck { font-size: 1rem; }
+            .folio { padding: 50px 18px; }
+            .folio-body { font-size: 1rem; }
+            .product-in { padding: 0 18px; }
+            .price-section { padding: 70px 18px; }
+            .anchor.featured .a-val { font-size: 2.7rem; }
+            .finale { padding: 90px 18px; }
+            .marquee-track { font-size: 1.35rem; gap: 30px; }
+            .marquee-track span { gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-in">
+        <div class="nav-left">
+            <span class="ar">العدد 04 · ٢٠٢٦</span>
+            <span class="en">Folio 04 · 2026</span>
+        </div>
+        <div class="nav-mark">Pdf <i>All In One</i> · LegalDan</div>
+        <div class="nav-right">
+            <div class="lang">
+                <a href="#" data-lang="ar">AR</a>
+                <span class="sep">·</span>
+                <a href="#" data-lang="en">EN</a>
+            </div>
+            <a href="#pricing" class="nav-link"><span class="ar">الإصدار</span><span class="en">Edition</span></a>
+            <a href="https://play.google.com/store/apps/details?id=com.legaldan.pdfmergerpro&referrer=marketer_id%3DMARI201%26marketer_name%3DMaria" target="_blank" rel="noopener" class="nav-cta"><span class="ar">تحميل</span><span class="en">Download</span></a>
+        </div>
+    </div>
+</nav>
+
+<!-- STRIP -->
+<div class="strip">
+    <span class="ar">العدد رقم 04 — المحفظة</span>
+    <span class="en">Issue No. 04 — The Portfolio</span>
+    <span class="ar">★ في هذا الإصدار: المحفظة الجيبية</span>
+    <span class="en">★ Featured: The Pocket Folio</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-text">
+        <div class="hero-eyebrow">
+            <span class="ar">أرشيف جيبيّ لحياةٍ مليئةٍ بالأوراق</span>
+            <span class="en">A pocket archive for a paper-heavy life</span>
+        </div>
+        <h1>
+            <span class="ar">
+                <span class="line">كلُّ</span>
+                <span class="line"><span class="it">توقيع.</span></span>
+                <span class="line">كلُّ هامش.</span>
+                <span class="line">كلُّ <span class="it">لحظة.</span></span>
+            </span>
+            <span class="en">
+                <span class="line">Every</span>
+                <span class="line"><span class="it">signature.</span></span>
+                <span class="line">Every margin.</span>
+                <span class="line">Every <span class="it">moment.</span></span>
+            </span>
+        </h1>
+        <p class="hero-deck">
+            <span class="ar">استوديو للوثائق التي تُدير حياتك — تُمسح، تُحرَّر، تُوقَّع وتُرسَل من الجهاز الوحيد الذي تحمله فعلًا.</span>
+            <span class="en">A studio for the documents that run your life — scanned, edited, signed and sent from the only device you actually carry.</span>
+        </p>
+        <div class="hero-cta-row">
+            <a href="https://play.google.com/store/apps/details?id=com.legaldan.pdfmergerpro&referrer=marketer_id%3DMARI201%26marketer_name%3DMaria" target="_blank" rel="noopener" class="btn-primary">
+                <span class="ar">حمِّل لأندرويد</span>
+                <span class="en">Download for Android</span>
+            </a>
+            <div class="hero-micro">
+                <span class="ar">عشرة أيام مجانية. على حسابنا.</span>
+                <span class="en">10 days, on the house.</span>
+            </div>
+        </div>
+    </div>
+    <div class="hero-portrait">
+        <span class="corner-tag">
+            <span class="ar">الغلاف · المؤسِّسة</span>
+            <span class="en">Cover · The Founder</span>
+        </span>
+        <img src="assets/MAR3.jpeg" alt="Maria — The Portfolio">
+        <div class="credit">
+            <span class="ar">تصوير<br>الاستوديو، ٢٠٢٦</span>
+            <span class="en">Photography by<br>The Studio, 2026</span>
+        </div>
+    </div>
+</section>
+
+<!-- MARQUEE — language-aware -->
+<div class="marquee">
+    <div class="marquee-track">
+        <span class="ar">مَسح</span><span class="en">Scan</span>
+        <span class="ar">دمج</span><span class="en">Merge</span>
+        <span class="ar">توقيع</span><span class="en">Sign</span>
+        <span class="ar">حماية</span><span class="en">Protect</span>
+        <span class="ar">إرسال</span><span class="en">Send</span>
+        <span class="ar">تحرير</span><span class="en">Edit</span>
+        <span class="ar">مَسح</span><span class="en">Scan</span>
+        <span class="ar">دمج</span><span class="en">Merge</span>
+        <span class="ar">توقيع</span><span class="en">Sign</span>
+        <span class="ar">حماية</span><span class="en">Protect</span>
+        <span class="ar">إرسال</span><span class="en">Send</span>
+        <span class="ar">تحرير</span><span class="en">Edit</span>
+    </div>
+</div>
+
+<!-- FOLIO 01 -->
+<section class="folio reveal">
+    <div class="folio-media">
+        <span class="folio-tag">
+            <span class="ar">الملف 01 · على الطريق</span>
+            <span class="en">Folio 01 · The Road</span>
+        </span>
+        <img src="assets/MAR1.jpeg" alt="On the road">
+        <div class="timestamp">09:47</div>
+    </div>
+    <div class="folio-copy">
+        <div class="folio-num">
+            <span class="ar">الفصل الأوّل</span>
+            <span class="en">Act One</span>
+        </div>
+        <h2>
+            <span class="ar">العقد يصل <em>والمدينة لا تنتظر.</em></span>
+            <span class="en">The contract arrives <em>while the city moves.</em></span>
+        </h2>
+        <p class="folio-body">
+            <span class="ar">رسالة واتساب. ملف PDF. موعدٌ نهائيّ لا يصبر على كرسي مكتبك. تفتح التطبيق، تمسح الصفحة التي أعادتها لك، تُسقِط توقيعك، تُرسلها. ثلاث دقائق. بلا طابعة. بلا ندم.</span>
+            <span class="en">A WhatsApp lands. A PDF. A deadline that won't wait for your office chair. You open the app, scan the page she sent back, drop your signature, send it home. Three minutes. No printer. No regret.</span>
+        </p>
+        <div class="folio-pull">
+            <span class="ar">"الأداة الصغيرة التي تُزيل بهدوء فئةً كاملةً من الإحباط اليوميّ."</span>
+            <span class="en">"The kind of small tool that quietly removes a whole category of friction from your day."</span>
+        </div>
+        <a href="https://play.google.com/store/apps/details?id=com.legaldan.pdfmergerpro&referrer=marketer_id%3DMARI201%26marketer_name%3DMaria" target="_blank" rel="noopener" class="folio-act">
+            <span class="ar">تابع التحميل</span>
+            <span class="en">Continue to download</span>
+        </a>
+    </div>
+</section>
+
+<!-- FOLIO 02 -->
+<section class="folio reverse reveal">
+    <div class="folio-media">
+        <span class="folio-tag">
+            <span class="ar">الملف 02 · الاستراحة</span>
+            <span class="en">Folio 02 · The Pause</span>
+        </span>
+        <img src="assets/MAR2.png" alt="Between things">
+        <div class="timestamp">13:23</div>
+    </div>
+    <div class="folio-copy">
+        <div class="folio-num">
+            <span class="ar">الفصل الثاني</span>
+            <span class="en">Act Two</span>
+        </div>
+        <h2>
+            <span class="ar">الغداء عشرون دقيقة. <em>الاستمارة دقيقتان.</em></span>
+            <span class="en">Lunch is <em>twenty minutes.</em> The form is two.</span>
+        </h2>
+        <p class="folio-body">
+            <span class="ar">انقُر الحقل. تظهر لوحة المفاتيح. اكتُب. وقِّع. انتهى. تتلاءم الخطوط مع أيّ صندوقٍ اختاره المحامي. لا معاينة طباعة. لا "حفظ باسم". مجرّد ملفٍّ موقَّع، في صندوق الصادر.</span>
+            <span class="en">Tap the field. The keyboard appears. Type. Sign. Done. Auto-fitted to whatever box the lawyer chose. No print preview. No "save as." Just the file, sealed, in your sent folder.</span>
+        </p>
+        <div class="folio-pull">
+            <span class="ar">"مُصمَّم لتلك الدقائق بين المهامّ — التي كنّا نهدرها بصمت."</span>
+            <span class="en">"Designed for the in-between minutes — the ones we used to lose."</span>
+        </div>
+        <a href="https://play.google.com/store/apps/details?id=com.legaldan.pdfmergerpro&referrer=marketer_id%3DMARI201%26marketer_name%3DMaria" target="_blank" rel="noopener" class="folio-act">
+            <span class="ar">تابع التحميل</span>
+            <span class="en">Continue to download</span>
+        </a>
+    </div>
+</section>
+
+<!-- FOLIO 03 -->
+<section class="folio reveal">
+    <div class="folio-media">
+        <span class="folio-tag">
+            <span class="ar">الملف 03 · الختام</span>
+            <span class="en">Folio 03 · The Close</span>
+        </span>
+        <img src="assets/MAR3.jpeg" alt="The signature">
+        <div class="timestamp">17:09</div>
+    </div>
+    <div class="folio-copy">
+        <div class="folio-num">
+            <span class="ar">الفصل الثالث</span>
+            <span class="en">Act Three</span>
+        </div>
+        <h2>
+            <span class="ar">تُرسلها للتوقيع. <em>توقِّع في متصفّحها.</em></span>
+            <span class="en">You send it for signing. <em>She signs in her browser.</em></span>
+        </h2>
+        <p class="folio-body">
+            <span class="ar">توقيع عن بُعد مصمَّم لمن لا يحبّون التعقيد: يصلها الرابط عبر واتساب أو البريد، تُوقِّع في المتصفّح، دون تثبيت تطبيق ودون إنشاء حساب. النسخة الموقَّعة تصل لكِليكما. والأصل يُمحى من الخادم بعد دقائق.</span>
+            <span class="en">Remote signing built for grown-ups: she gets a link via WhatsApp or email, signs in a browser, no app to install, no account to make. The signed copy lands in both inboxes. The original is wiped from the server.</span>
+        </p>
+        <div class="folio-pull">
+            <span class="ar">"تجربة التوقيع التي طالما أردناها — بلا تخمة برمجيّات المؤسّسات."</span>
+            <span class="en">"The signing flow we always wanted — without the enterprise software bloat."</span>
+        </div>
+        <a href="https://play.google.com/store/apps/details?id=com.legaldan.pdfmergerpro&referrer=marketer_id%3DMARI201%26marketer_name%3DMaria" target="_blank" rel="noopener" class="folio-act">
+            <span class="ar">تابع التحميل</span>
+            <span class="en">Continue to download</span>
+        </a>
+    </div>
+</section>
+
+<!-- PRODUCT -->
+<section class="product">
+    <div class="product-in">
+        <div class="product-head reveal">
+            <div>
+                <div class="label">
+                    <span class="ar">الورشة</span>
+                    <span class="en">The atelier</span>
+                </div>
+                <h2>
+                    <span class="ar">المحفظة <em>الجيبيّة.</em></span>
+                    <span class="en">The <em>Pocket Folio.</em></span>
+                </h2>
+            </div>
+            <div class="deck">
+                <span class="ar">ثلاث وعشرون أداةً مصمَّمةً لتعيش في متناول إبهامك. بلا حشوٍ. بلا قوائم لن تفتحها. فقط ما ستستخدمه اليوم، وغدًا، وفي الحادية عشرة وأربعين دقيقةً ليلًا قبل موعد التسليم.</span>
+                <span class="en">Twenty-three tools designed to live inside your thumb's reach. No bloat. No menus you'll never open. Just the things you'll use today, tomorrow, and at 11:42 PM before a deadline.</span>
+            </div>
+        </div>
+        <div class="tools-grid">
+            <div class="tool reveal">
+                <span class="num">01</span>
+                <h3>
+                    <span class="ar">مَسح إلى <em>PDF</em></span>
+                    <span class="en">Scan to <em>PDF</em></span>
+                </h3>
+                <p>
+                    <span class="ar">الكاميرا تتحوّل إلى ماسحٍ ضوئيّ. كشف حوافٍّ تلقائيّ، صفحات متعدّدة، حادّ، بلا ظلالٍ رماديّة.</span>
+                    <span class="en">Camera-as-scanner with auto edge detection. Multi-page, sharp, no grey halos.</span>
+                </p>
+            </div>
+            <div class="tool reveal">
+                <span class="num">02</span>
+                <h3>
+                    <span class="ar">دمج <em>وتقسيم</em></span>
+                    <span class="en">Merge & <em>split</em></span>
+                </h3>
+                <p>
+                    <span class="ar">ادمج، اقسِم، أعِد الترتيب. اسحب صفحة، ضعها حيث ينبغي أن تكون.</span>
+                    <span class="en">Combine, divide, reorder. Drag a page, place it where it should have been.</span>
+                </p>
+            </div>
+            <div class="tool reveal">
+                <span class="num">03</span>
+                <h3>
+                    <span class="ar">تحرير <em>دون قلق</em></span>
+                    <span class="en">Edit <em>without fear</em></span>
+                </h3>
+                <p>
+                    <span class="ar">تدوير، اقتصاص، تنقيح. معاينة كاملة في اللحظة التي تفتح فيها الملفّ.</span>
+                    <span class="en">Rotate, crop, redact. Full preview the instant you open the file.</span>
+                </p>
+            </div>
+            <div class="tool reveal">
+                <span class="num">04</span>
+                <h3>
+                    <span class="ar">تعبئة <em>وتوقيع</em></span>
+                    <span class="en">Fill <em>& sign</em></span>
+                </h3>
+                <p>
+                    <span class="ar">انقُر حقلًا، اكتُب. وقِّع بإصبعك. الخطوط تتلاءم تلقائيًّا مع أيّ حجم.</span>
+                    <span class="en">Tap a field, type. Sign with your finger. Auto-fit fonts handle the rest.</span>
+                </p>
+            </div>
+            <div class="tool reveal">
+                <span class="num">05</span>
+                <h3>
+                    <span class="ar">توقيع <em>عن بُعد</em></span>
+                    <span class="en">Remote <em>signing</em></span>
+                </h3>
+                <p>
+                    <span class="ar">أرسِل عبر واتساب أو البريد. يوقِّع المُستلِم في متصفّحه. النسخة تعود إلى كليكما.</span>
+                    <span class="en">Send via WhatsApp or email. They sign in a browser. The copy returns to both.</span>
+                </p>
+            </div>
+            <div class="tool reveal">
+                <span class="num">06</span>
+                <h3>
+                    <span class="ar">مُشفَّر <em>افتراضيًّا</em></span>
+                    <span class="en">Encrypted <em>by default</em></span>
+                </h3>
+                <p>
+                    <span class="ar">وثائقك وبيانات المُرسِل تبقى مشفَّرةً على جهازك. تأكيد العضويّة المميَّزة عبر Google Play.</span>
+                    <span class="en">Documents and sender details stay encrypted on device. Premium status verified by Google Play.</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="price-section" id="pricing">
+    <div class="price-in">
+        <div class="label">
+            <span class="ar">الإصدار</span>
+            <span class="en">The edition</span>
+        </div>
+        <h2>
+            <span class="ar">سعرٌ واحد. <em>سنةٌ كاملة.</em></span>
+            <span class="en">One price. <em>One year.</em></span>
+        </h2>
+        <div class="anchor-row">
+            <div class="anchor">
+                <div class="a-label">
+                    <span class="ar">حُزم سطح المكتب</span>
+                    <span class="en">Desktop suites</span>
+                </div>
+                <div class="a-val">
+                    <span class="ar">من $179</span>
+                    <span class="en">from $179</span>
+                </div>
+                <div class="a-sub">
+                    <span class="ar">في السنة</span>
+                    <span class="en">a year</span>
+                </div>
+            </div>
+            <div class="anchor featured">
+                <div class="a-label">★ Pdf All In One</div>
+                <div class="a-val">$24.99</div>
+                <div class="a-sub">
+                    <span class="ar">في السنة — أو $4.99 شهريًّا</span>
+                    <span class="en">per year — or $4.99 monthly</span>
+                </div>
+            </div>
+            <div class="anchor">
+                <div class="a-label">
+                    <span class="ar">تطبيقات احترافيّة</span>
+                    <span class="en">Pro mobile apps</span>
+                </div>
+                <div class="a-val">
+                    <span class="ar">من $129</span>
+                    <span class="en">from $129</span>
+                </div>
+                <div class="a-sub">
+                    <span class="ar">في السنة</span>
+                    <span class="en">a year</span>
+                </div>
+            </div>
+        </div>
+        <div class="price-cta">
+            <a href="https://play.google.com/store/apps/details?id=com.legaldan.pdfmergerpro&referrer=marketer_id%3DMARI201%26marketer_name%3DMaria" target="_blank" rel="noopener" class="btn-primary">
+                <span class="ar">ابدأ التجربة</span>
+                <span class="en">Begin the trial</span>
+            </a>
+        </div>
+        <div class="price-pillars">
+            <div class="pillar">
+                <div class="pn"><span class="ar">١.</span><span class="en">i.</span></div>
+                <div class="pt">
+                    <span class="ar">عشرة أيام مجانًا، بلا بطاقة.</span>
+                    <span class="en">Ten days, free, no card.</span>
+                </div>
+                <div class="pd">
+                    <span class="ar">افتح التطبيق وتبدأ التجربة. بلا تسجيل، بلا التزام، بلا خصمٍ تلقائيٍّ بعدها.</span>
+                    <span class="en">Open the app and the trial begins. No signup, no commitment, no autopilot charge afterwards.</span>
+                </div>
+            </div>
+            <div class="pillar">
+                <div class="pn"><span class="ar">٢.</span><span class="en">ii.</span></div>
+                <div class="pt">
+                    <span class="ar">الإلغاء داخل Google Play.</span>
+                    <span class="en">Cancel inside Google Play.</span>
+                </div>
+                <div class="pd">
+                    <span class="ar">نقرتان داخل المتجر. لا نطلب منك كتابة رسالةٍ ولا ملء استمارة.</span>
+                    <span class="en">Two taps inside the Play Store. We don't make you write a letter.</span>
+                </div>
+            </div>
+            <div class="pillar">
+                <div class="pn"><span class="ar">٣.</span><span class="en">iii.</span></div>
+                <div class="pt">
+                    <span class="ar">ملفّاتك لا تغادر هاتفك أبدًا.</span>
+                    <span class="en">Your files never leave your phone.</span>
+                </div>
+                <div class="pd">
+                    <span class="ar">المحلّيّة أوّلًا. التوقيع عن بُعد فقط يَلمس خادمنا — ويُمحى تلقائيًّا بعد التوقيع.</span>
+                    <span class="en">Local-first. Only remote signing sessions touch our server — and they're auto-deleted after the signature.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FINALE -->
+<section class="finale">
+    <div class="label">
+        <span class="ar">كلمةٌ ختاميّة</span>
+        <span class="en">A closing note</span>
+    </div>
+    <h2>
+        <span class="ar">الوثيقة التالية <em>في طريقها إليك.</em></span>
+        <span class="en">The next document <em>is on its way.</em></span>
+    </h2>
+    <p>
+        <span class="ar">كُن الشخص الذي فتح التطبيق مسبقًا.</span>
+        <span class="en">Be the person who already has the app open.</span>
+    </p>
+    <a href="https://play.google.com/store/apps/details?id=com.legaldan.pdfmergerpro&referrer=marketer_id%3DMARI201%26marketer_name%3DMaria" target="_blank" rel="noopener" class="btn-primary">
+        <span class="ar">احصل عليه على Google Play</span>
+        <span class="en">Get it on Google Play</span>
+    </a>
+    <div class="below">
+        <span class="ar">تجربة · ١٠ أيام · بلا بطاقة · ألغِ في أيّ وقت</span>
+        <span class="en">Trial · 10 days · No card · Cancel anytime</span>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-in">
+        <div class="colofon">
+            <span class="ar">© ٢٠٢٦ LegalDan — العدد رقم 04 · بئر السبع</span>
+            <span class="en">© 2026 LegalDan — Folio Issue No. 04 · Beer-Sheva</span>
+        </div>
+        <div>
+            <a href="https://legaldan.co.il">legaldan.co.il</a>
+            <a href="#"><span class="ar">الخصوصيّة</span><span class="en">Privacy</span></a>
+            <a href="#"><span class="ar">الشروط</span><span class="en">Terms</span></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+// ── Language toggle ──────────────────────────────────────────
+function setLanguage(lang) {
+    if (lang !== 'ar' && lang !== 'en') lang = 'ar';
+    const root = document.documentElement;
+    root.classList.remove('lang-ar', 'lang-en');
+    root.classList.add('lang-' + lang);
+    root.lang = lang;
+    root.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    try { localStorage.setItem('preferredLang', lang); } catch (e) {}
+}
+
+document.querySelectorAll('[data-lang]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        setLanguage(btn.dataset.lang);
+    });
+});
+
+// On load: prefer stored choice; otherwise default to Arabic (Gulf-first)
+(function() {
+    let lang = 'ar';
+    try {
+        const saved = localStorage.getItem('preferredLang');
+        if (saved === 'en' || saved === 'ar') lang = saved;
+    } catch (e) {}
+    setLanguage(lang);
+})();
+
+// ── Scroll reveals ───────────────────────────────────────────
+(function() {
+    if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+</script>
+
+</body>
+</html>
